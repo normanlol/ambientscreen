@@ -1,0 +1,280 @@
+body {
+	background-image: url("back/1.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-color:#282828;
+	margin:10px;
+	
+}
+
+h1 {
+	font-family: Arial;
+	color:white;
+	margin-bottom:7px;
+}
+
+p, label {
+	font-family: Arial;
+	color:white;
+}
+
+.overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: rgba(51,51,51,0.7);
+	z-index: 10;
+}
+
+.overlayContent {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding:15px;
+}
+
+.blockContainer {
+	overflow: hidden;
+	width:100%;
+	height:100%;
+}
+
+#weatherBlock {
+	float:left;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid white;
+  border-radius: 50%;
+  animation: lds-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+.lds-ring div:nth-child(4) {
+  animation-delay: -0.05s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.lds-ringdark {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.lds-ringdark div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #282828;
+  border-radius: 50%;
+  animation: lds-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+.lds-ringdark div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ringdark div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ringdark div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+.lds-ringdark div:nth-child(4) {
+  animation-delay: -0.05s;
+}
+
+@keyframes lds-ringdark {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#alertBlock {
+	-webkit-transition: background-color 2s, height 2s, opacity 1s;
+	transition: background-color 2s, height 2s, opacity 1s;
+	border-color:transparent;
+	border-radius:10px;
+	opacity: 0.0;
+	height:0px;
+	padding:5px;
+}
+
+#alertTitle {
+	color:black;
+	font-weight:bold;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#alertDesc {
+	margin-top:1px;
+	margin-bottom:1px;
+	color:black;
+}
+
+#alertMore {
+	color:black;
+}
+
+#apiBlock {
+	width:40%
+}
+
+#timeBlock {
+	text-align:right;
+}
+
+#newsBlock1, #newsBlock2 {
+	background-color:#282828;
+	width:700px;
+	height:300px;
+	border-color:transparent;
+	border-radius:10px;
+	margin-top:230px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:15px;
+	padding-right:15px;
+	position: relative;
+}
+
+#newsBlock2 {
+	float:right;
+	margin:0px;
+	margin-top:-310px;
+}
+
+#article1Desc, #article2Desc {
+	width:79%
+}
+
+#time, #date{
+	margin:0px;
+}
+
+.qrImg {
+	width:150px;
+	height:150px;
+	margin:5px;
+	right:0;
+    bottom:0;
+	position:absolute;
+}
+
+.conditions {
+	margin-top:2px;
+}
+
+.credit {
+	font-size:10px;
+	font-weight:bold;
+}
+
+#footer {
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	width:100%;
+	overflow: hidden;
+	padding-right:5px;
+	text-align:right;
+	color:white;
+}
+
+.settingsBox {
+	background-color:black;
+	height:600px;
+	width:700px;
+	border-color:transparent;
+	border-radius:10px;
+	padding:10px;
+	text-align:left;
+}
+
+.2spacer {
+	width:5px;
+	height:5px;
+}
+
+.popup {
+	background-color:black;
+	border-color:transparent;
+	border-radius:10px;
+	padding:10px;
+}
+
+.wWidget {
+	background-color:white;
+	border-color:transparent;
+	border-radius:10px;
+	width:675px;
+	height:250px;
+}
+
+button {
+	background-color: white;
+	color:black;
+	border-color:transparent;
+	border-radius:10px;
+	cursor:pointer;
+	-webkit-transition: background-color .5s, color .5s;
+	height:30px;
+	transition: background-color .5s, color .5s;
+}
+
+button:hover {
+	background-color: black;
+	color:white;
+}

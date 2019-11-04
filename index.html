@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AmbientScreen</title>
+		<link rel="shortcut icon" href="ico/favicon.ico"/>
+		<link href="css/style.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	</head>
+	<body>
+		<div class="overlay" id="loader">
+			<div class="overlayContent"><center>
+				<h1>AmbientScreen is loading...</h1>
+				<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+				<p id="deets">please wait...<br>if you see this for more than a few seconds, javascript could be disabled now. please enable it.</p>
+			</center></div>
+		</div>
+		<div id="locationRequest" style="display:none;" class="overlay">
+			<div class="overlayContent"><center>
+				<h1>Please let us access your location!</h1>
+				<p>
+					This allows us to get weather information and local news. This is stored in your local storage and not shared with developers.
+					If you do have a VPN on, for the most accurate information, please turn it off until this page refreshes.
+				</p>
+				<div id="showUnits">
+					<select id="units">
+						<option value="I">Imperial</option>
+						<option value="M">Metric</option>
+						<option value="S">Kevlin (Scientific)</option>
+					</select>
+					<button onclick="getLocation()">Save Settings</button><br>
+				</div>
+				<div id="countryCode" style="display:none;">
+					<input id="countryCodeInpt" placeholder="Example: 'us' for United States citizens.">
+					<button onclick="saveCode()">Save Settings</button><br>
+				</div>
+				<p id="locationDenied" style="display:none; color:red;">Error! <b>Please allow location services!</b></p>
+				<div id="locLoad" style="display:none;" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+				<p id="deets"></p>
+			</center></div>
+		</div>
+		<div class="blockContainer">
+			<div id="weatherBlock">
+				<div id="widget" class="wWidget"></div>
+				<div id="apiInfo" style="display:none;">
+					<h1><span id="temperature">--</span><span id="dg"></span></h1>
+					<p id="currentC" class="conditions">[Loading]</p><div id="alertBlock">
+						<span id="alertIcon" class="material-icons">error</span>
+						<p style="display:none;" id="alertTitle">[Loading]</p>
+						<p style="display:none;" id="alertDesc"></p>
+						<p style="display:none;" id="alertMore">For more information, go to alerts.weather.gov.</p>
+					</div>
+				</div>
+				<p class="credit">weather information provided by <span id="wProvider">dark sky</span>.</p>
+			</div>
+			<div id="timeBlock">
+				<h1 id="time"><span id="hr">XX</span>:<span id="mi">XX</span>:<span id="se">XX</span> <span id="ampm">XX</span></h1>
+				<p id="date"><span id="mo">06</span>/<span id="da">09</span>/<span id="yr">2019</span></p>
+				<p></p>
+			</div>
+			<div id="newsBlock1">
+				<h1 id="article1Title">[Loading]</h1>
+				<p id="article1Desc">[Loading]</p>
+				<img class="qrImg" id="article1URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
+			</div>
+			<div id="newsBlock2">
+				<h1 id="article2Title">[Loading]</h1>
+				<p id="article2Desc">[Loading]</p>
+				<img class="qrImg" id="article2URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
+			</div>
+			<p class="credit">news information provided by newsapi.org, associated press, and qrtag.net</p>
+		</div>
+		<div id="footer">
+			<span style="cursor:pointer;" onclick="openSettings();" class="material-icons">settings</span>
+		</div>
+		<div id="settings" class="overlay" style="display:none;">
+			<div class="overlayContent"><center>
+				<div class="settingsBox">
+					<button style="float:right;" onclick="document.getElementById('settings').style.display = 'none';" class="material-icons">close</button><br>
+					<label>Date Display:</label>
+					<select id="dDisplay">
+						<option value="us">MM/DD/YYYY</option>
+						<option value="uk">DD/MM/YYYY</option>
+					</select>
+					<div class="2spacer"></div>
+					<label>Time Display:</label>
+					<select id="tDisplay">
+						<option value="us">12 hour</option>
+						<option value="uk">24 hour</option>
+					</select>
+					<div class="2spacer"></div>
+					<label>Weather Information Method:</label>
+					<select id="wMethod">
+						<option value="widget">Widget (Dark Sky)</option>
+						<option value="api">API Parsing (Weatherbit.io) [beta]</option>
+					</select>
+					<div class="2spacer"></div>
+					<label>Weather Units:</label>
+					<select id="sUnits">
+						<option value="I">Imperial</option>
+						<option value="M">Metric</option>
+						<option value="S">Kevlin (Scientific)</option>
+					</select>
+					<div class="2spacer"></div>
+					<button onclick="getLocationPerm();">Reset Location</button><br>
+					<div class="2spacer"></div>
+					<button onclick="confirmReset();">Reset All Settings</button><br>
+					<div class="2spacer"></div>
+					<button onclick="saveSettings();">Save Settings</button>
+					<div>
+						<p>Your Location:</p>
+						<p>Latitude: <span id="lat">xxxxxxxxx</span><br>
+						Longitude: <span id="lon">xxxxxxxxx</span><br>
+						Approximate location: <span id="geolocation">xxxxxxxxx</span></p>
+						<button id="show-btn" onclick="showLocation();">Show Location</button>
+					</div>
+					<p class="credit">no personal information is shared with the developer. geocoding done by <a href="https://geocode.xyz">geocode.xyz</a>.<br>data last updated: <span id="LUString"></span> | <a href="#" onclick="onStartup();">update data</a></p>
+					<div id="settingLoad" style="display:none;" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+				</div>
+			</center></div>
+		</div>
+		<div class="overlay" id="confirmReset" style="display:none;">
+			<div class="overlayContent">
+				<div class="popup">
+					<p>Are you sure you want to reset all of your settings?</p>
+					<button onclick="resetSettings();">Yes</button><button onclick="document.getElementById('confirmReset').style.display='none';">No</button>
+				</div>
+				<div id="resetLoad" style="display:none;" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+			</div>
+		</div>
+		<div class="overlay" id="finishReset" style="display:none;">
+			<div class="overlayContent">
+				<div class="popup">
+					<p>All settings have been removed from your computer's storage.</p>
+					<button onclick="location.reload()">Refresh page (gives settings right back)</button><button onclick="window.open('https://google.com', '_self')">Leave the site</button>
+				</div>
+			</div>
+		</div>
+		<div class="overlay" id="kelvinErr" style="display:none;">
+			<div class="overlayContent">
+				<div class="popup">
+					<p>Kelvin measurements are currently incompatible with the DarkSky widget. Please select on of the following options.</p>
+					<button onclick="getLocationPerm();">Switch Measurement</button><button onclick="localStorage.setItem('wMethod', 'api'); location.reload();">Switch to API</button>
+				</div>
+			</div>
+		</div>
+		<div class="overlay" id="missingSettings" style="display:none;">
+			<div class="overlayContent">
+				<div class="popup">
+					<p>Due to some missing settings, we have saved the settings to your computer and this page will refresh in about <span id="rSeconds"></span> seconds.</p>
+				</div>
+			</div>
+		</div>
+		<script src="js/app.js"></script>
+	</body>
+</html>
