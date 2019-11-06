@@ -123,7 +123,7 @@ function getWeatherA() {
 	if (localStorage.getItem == "I") {var units = "imperial";}
 	if (localStorage.getItem == "M") {var units = "metric";}
 	if (localStorage.getItem == "K") {kelvinErr(); return;}
-	const dUrl = "http://api.openweathermap.org/data/2.5/weather?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
+	const dUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
 	http.open("GET", dUrl);
 	http.send();
 	http.onreadystatechange=(e)=>{
@@ -143,7 +143,7 @@ function getForecastA() {
 	if (localStorage.getItem == "I") {var units = "imperial";}
 	if (localStorage.getItem == "M") {var units = "metric";}
 	if (localStorage.getItem == "K") {kelvinErr(); return;}
-	const dUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
+	const dUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
 	http.open("GET", dUrl);
 	http.send();
 	http.onreadystatechange=(e)=>{
