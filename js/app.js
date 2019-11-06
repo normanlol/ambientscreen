@@ -107,10 +107,29 @@ function getWeather() {
 	http.send();
 	http.onreadystatechange=(e)=>{
 		var wd = JSON.parse(http.responseText);
-		var temp = wd.data[0].temp;
+		var temp = Math.round(wd.data[0].temp);
 		document.getElementById("temperature").innerHTML = temp;
 		var conditions = wd.data[0].weather.description;
 		document.getElementById("currentC").innerHTML = conditions;
+		getForecast();
+	}
+}
+
+function getForecast() {
+	document.getElementById("deets").innerHTML = "getting future weather conditions..."
+	const http = new XMLHttpRequest();
+	const dUrl = "https://api.weatherbit.io/v2.0/forecast/daily?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&key=6789ff326aa04cffb89e0f89c6054ce9&units=" + localStorage.getItem("units");
+	http.open("GET", dUrl);
+	http.send();
+	http.onreadystatechange=(e)=>{
+		var wd = JSON.parse(http.responseText);
+		var highTemp = Math.round(wd.data[1].high_temp);
+		var lowTemp = Math.round(wd.data[1].high_temp);
+		var futureConditions = wd.data[1].weather.description;
+		document.getElementById("fHigh").innerHTML = highTemp;
+		document.getElementById("fLow").innerHTML = lowTemp;
+		document.getElementById("fConditions").innerHTML = futureConditions;
+		document.getElementById("forecastTxt").style.display = "";
 		getNews();
 	}
 }
@@ -155,8 +174,6 @@ function getForecastA() {
 		document.getElementById("fLow").innerHTML = lowTemp;
 		document.getElementById("fConditions").innerHTML = futureConditions;
 		document.getElementById("forecastTxt").style.display = "";
-		if (localStorage.getItem("units") === "I") {document.getElementById("dg").innerHTML = "°F"} 
-		if (localStorage.getItem("units") === "M") {document.getElementById("dg").innerHTML = "°C"} 
 		getNews();
 	}
 }
