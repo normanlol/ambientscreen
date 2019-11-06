@@ -14,7 +14,8 @@ function onStartup() {
 	if (!localStorage.getItem("lat") | !localStorage.getItem("lon") | !localStorage.getItem("units") | !localStorage.getItem("country")) {getLocationPerm(); return;}
 	if (!localStorage.getItem("wMethod")) {localStorage.setItem("wMethod", "widget");}
 	if (localStorage.getItem("wMethod") === "widget") {embedWidget();}
-	if (localStorage.getItem("wMethod") === "api") {getAlerts();}
+	if (localStorage.getItem("wMethod") === "wbit" | localStorage.getItem("wMethod") === "api") {getAlerts();}
+	if (localStorage.getItem("wMethod") === "owea") {getWeatherA();}
 	document.getElementById("deets").innerHTML = "getting weather information...";
 	if (localStorage.getItem("units") === "I") {document.getElementById("dg").innerHTML = "°F"} 
 	if (localStorage.getItem("units") === "S") {document.getElementById("dg").innerHTML = " K"} 
@@ -77,6 +78,7 @@ function getAlerts() {
 			var wAlertSeverity = wd.alerts[0].severity;
 			var wAlertTitle = wd.alerts[0].title;
 			var wAlertURI = wd.alerts[0].uri;
+			document.getElementById("alertBlock").style.display = "";
 			document.getElementById("alertBlock").style = "background-color: #FF6D6D; opacity:1.0; color:black; height:230px;"
 			document.getElementById("alertTitle").innerHTML = wAlertTitle;
 			document.getElementById("alertDesc").innerHTML = wAlertInfo;
@@ -97,6 +99,7 @@ function getAlerts() {
 }
 
 function getWeather() {
+	document.getElementById("wProvider").innerHTML = "weatherbit.io";
 	document.getElementById("deets").innerHTML = "getting current weather conditions..."
 	const http = new XMLHttpRequest();
 	const dUrl = "https://api.weatherbit.io/v2.0/currently?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&key=6789ff326aa04cffb89e0f89c6054ce9&units=" + localStorage.getItem("units");
@@ -108,7 +111,53 @@ function getWeather() {
 		document.getElementById("temperature").innerHTML = temp;
 		var conditions = wd.data[0].weather.description;
 		document.getElementById("currentC").innerHTML = conditions;
-		document.getElementById("loader").style.display = "none";
+		getNews();
+	}
+}
+
+function getWeatherA() {
+	document.getElementById("wProvider").innerHTML = "openweathermap.com";
+	document.getElementById("deets").innerHTML = "getting current weather conditions...";
+	document.getElementById("widget").style.display = "none";
+	const http = new XMLHttpRequest();
+	if (localStorage.getItem == "I") {var units = "imperial";}
+	if (localStorage.getItem == "M") {var units = "metric";}
+	if (localStorage.getItem == "K") {kelvinErr(); return;}
+	const dUrl = "http://api.openweathermap.org/data/2.5/weather?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
+	http.open("GET", dUrl);
+	http.send();
+	http.onreadystatechange=(e)=>{
+		var wd = JSON.parse(http.responseText);
+		var temp = Math.round(wd.main.temp);
+		document.getElementById("temperature").innerHTML = temp;
+		var conditions = wd.weather[0].description;
+		document.getElementById("currentC").innerHTML = conditions;
+		document.getElementById("apiInfo").style.display = "";
+		getForecastA();
+	}
+}
+
+function getForecastA() {
+	document.getElementById("deets").innerHTML = "getting future weather conditions...";
+	const http = new XMLHttpRequest();
+	if (localStorage.getItem == "I") {var units = "imperial";}
+	if (localStorage.getItem == "M") {var units = "metric";}
+	if (localStorage.getItem == "K") {kelvinErr(); return;}
+	const dUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=" + localStorage.getItem("lat") + "&lon=" + localStorage.getItem("lon") + "&APPID=2ba3c0dff8f39956e7d14a6b3dc07df5&units=imperial";
+	http.open("GET", dUrl);
+	http.send();
+	http.onreadystatechange=(e)=>{
+		var wd = JSON.parse(http.responseText);
+		var highTemp = Math.round(wd.list[0].main.temp_max);
+		var lowTemp = Math.round(wd.list[0].main.temp_min);
+		var futureConditions = wd.list[0].weather[0].description;
+		document.getElementById("fHigh").innerHTML = highTemp;
+		document.getElementById("fLow").innerHTML = lowTemp;
+		document.getElementById("fConditions").innerHTML = futureConditions;
+		document.getElementById("forecastTxt").style.display = "";
+		if (localStorage.getItem("units") === "I") {document.getElementById("dg").innerHTML = "°F"} 
+		if (localStorage.getItem("units") === "M") {document.getElementById("dg").innerHTML = "°C"} 
+		getNews();
 	}
 }
 

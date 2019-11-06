@@ -43,7 +43,9 @@
 				<div id="widget" class="wWidget"></div>
 				<div id="apiInfo" style="display:none;">
 					<h1><span id="temperature">--</span><span id="dg"></span></h1>
-					<p id="currentC" class="conditions">[Loading]</p><div id="alertBlock">
+					<p id="currentTxt" class="conditions">Currently, we have <b><span id="currentC">[Loading]</span></b>.</p>
+					<p id="forecastTxt" style="display:none;" class="conditions">Tommorow brings highs of <b><span id="fHigh"></span></b> and lows of <b><span id="fLow"></span></b> with <b><span id="fConditions"></span></b>.</p>
+					<div id="alertBlock" style="display:none;">
 						<span id="alertIcon" class="material-icons">error</span>
 						<p style="display:none;" id="alertTitle">[Loading]</p>
 						<p style="display:none;" id="alertDesc"></p>
@@ -91,7 +93,8 @@
 					<label>Weather Information Method:</label>
 					<select id="wMethod">
 						<option value="widget">Widget (Dark Sky)</option>
-						<option value="api">API Parsing (Weatherbit.io) [beta]</option>
+						<option value="wbit">API Parsing (Weatherbit.io) [beta]</option>
+						<option value="owea">API Parsing (OpenWeatherMap) [beta]</option>
 					</select>
 					<div class="2spacer"></div>
 					<label>Weather Units:</label>
