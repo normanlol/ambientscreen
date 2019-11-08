@@ -8,10 +8,29 @@ setInterval(function() {
 	onStartup();
 }, 1800000);
 
+setInterval(function() {
+	goBtwn();
+}, 60000);
+
+
+function goBtwn() {
+	if (document.getElementById("newsBlock1").style.display === 'none') {
+		document.getElementById("newsBlock1").style.display = 'block';
+		document.getElementById("newsBlock2").style.display = 'block';
+		document.getElementById("newsBlock3").style.display = 'none';
+		document.getElementById("newsBlock4").style.display = 'none';
+	} else {
+		document.getElementById("newsBlock1").style.display = 'none';
+		document.getElementById("newsBlock2").style.display = 'none';
+		document.getElementById("newsBlock3").style.display = 'block';
+		document.getElementById("newsBlock4").style.display = 'block';
+	}
+}
+
 function onStartup() {
 	document.getElementById("LUString").innerHTML = "Updating right now..."
 	document.getElementById("deets").innerHTML = "checking saved information...";
-	if (!localStorage.getItem("lat") | !localStorage.getItem("lon") | !localStorage.getItem("units") | !localStorage.getItem("country")) {getLocationPerm(); return;}
+	if (!localStorage.getItem("lat") | !localStorage.getItem("lon") | !localStorage.getItem("units")) {getLocationPerm(); return;}
 	if (!localStorage.getItem("wMethod")) {localStorage.setItem("wMethod", "widget");}
 	if (localStorage.getItem("wMethod") === "widget") {embedWidget();}
 	if (localStorage.getItem("wMethod") === "wbit" | localStorage.getItem("wMethod") === "api") {getAlerts();}
@@ -44,10 +63,9 @@ function getLocation() {
 function showPosition(position) {
 	localStorage.setItem("lat", position.coords.latitude);
 	localStorage.setItem("lon", position.coords.longitude);
-	document.getElementById("deets").innerHTML = "got location... parsing geocoding api (for local news)..."
-	document.getElementById("countryCode").style.display = '';
-	document.getElementById("locLoad").style.display = 'none';
-	document.getElementById("deets").innerHTML = "please enter your country code! if you don't know, look <a href='https://www.countrycode.org/'>here</a>.";
+	document.getElementById("deets").innerHTML = "got location... saving...";
+	location.reload();
+	document.getElementById("locLoad").style.display = '';
 }
 
 function showError(error) {
@@ -369,16 +387,28 @@ function getNews() {
 		} else {
 			var a1Title = wd.articles[0].title;
 			var a2Title = wd.articles[1].title;
+			var a3Title = wd.articles[2].title;
+			var a4Title = wd.articles[3].title;
 			var a1Desc = wd.articles[0].description;
 			var a2Desc = wd.articles[1].description;
+			var a3Desc = wd.articles[2].description;
+			var a4Desc = wd.articles[3].description;
 			var a1Url = wd.articles[0].url;
 			var a2Url = wd.articles[1].url;
+			var a3Url = wd.articles[2].url;
+			var a4Url = wd.articles[3].url;
 			document.getElementById("article1Title").innerHTML = a1Title;
 			document.getElementById("article2Title").innerHTML = a2Title;
+			document.getElementById("article3Title").innerHTML = a3Title;
+			document.getElementById("article4Title").innerHTML = a4Title;
 			document.getElementById("article1Desc").innerHTML = a1Desc;
 			document.getElementById("article2Desc").innerHTML = a2Desc;
+			document.getElementById("article3Desc").innerHTML = a3Desc;
+			document.getElementById("article4Desc").innerHTML = a4Desc;
 			document.getElementById("article1URL").src = "https://www.qrtag.net/api/qr.png?url=" + a1Url;
 			document.getElementById("article2URL").src = "https://www.qrtag.net/api/qr.png?url=" + a2Url;
+			document.getElementById("article3URL").src = "https://www.qrtag.net/api/qr.png?url=" + a3Url;
+			document.getElementById("article4URL").src = "https://www.qrtag.net/api/qr.png?url=" + a4Url;
 			document.getElementById("loader").style.display = 'none';
 		}
 	}
@@ -387,11 +417,4 @@ function getNews() {
 function noNews() {
 	document.getElementById("articleTitle").innerHTML = "Error!"
 	document.getElementById("articleDesc").innerHTML = "No news avaliable in your area right now."
-}
-
-function saveCode() {
-	localStorage.setItem("country", document.getElementById("countryCodeInpt").value);
-	location.reload();
-	document.getElementById("locLoad").style.display = '';
-	document.getElementById("countryCode").style.display = 'none';
 }

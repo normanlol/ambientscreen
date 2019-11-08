@@ -27,10 +27,6 @@
 						<option value="M">Metric</option>
 						<option value="S">Kevlin (Scientific)</option>
 					</select>
-					<button onclick="getLocation()">Save Settings</button><br>
-				</div>
-				<div id="countryCode" style="display:none;">
-					<input id="countryCodeInpt" placeholder="Example: 'us' for United States citizens.">
 					<button onclick="saveCode()">Save Settings</button><br>
 				</div>
 				<p id="locationDenied" style="display:none; color:red;">Error! <b>Please allow location services!</b></p>
@@ -68,6 +64,16 @@
 				<h1 id="article2Title">[Loading]</h1>
 				<p id="article2Desc">[Loading]</p>
 				<img class="qrImg" id="article2URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
+			</div>
+			<div id="newsBlock3" style="display:none;">
+				<h1 id="article3Title">[Loading]</h1>
+				<p id="article3Desc">[Loading]</p>
+				<img class="qrImg" id="article3URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
+			</div>
+			<div id="newsBlock4" style="display:none;">
+				<h1 id="article4Title">[Loading]</h1>
+				<p id="article4Desc">[Loading]</p>
+				<img class="qrImg" id="article4URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
 			</div>
 			<p class="credit">news information provided by newsapi.org, associated press, and qrtag.net</p>
 		</div>
