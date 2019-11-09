@@ -1,7 +1,13 @@
 onStartup();
+smallDisp();
 
 setInterval(function() {
 	getDate();
+	if (document.readyState === 'complete') {
+		document.getElementById("loader").style.display = "none";
+	} else {
+		document.getElementById("loader").style.display = "";
+	}
 }, 100);
 
 setInterval(function() {
@@ -41,11 +47,11 @@ function onStartup() {
 	if (localStorage.getItem("units") === "M") {document.getElementById("dg").innerHTML = "°C"} 
 	applySettings();
 	update();
+	getBack();
 }
 
 function getLocationPerm() {
 	document.getElementById("settings").style.display = "none"
-	document.getElementById("loader").style.display = 'none';
 	document.getElementById("kelvinErr").style.display = 'none';
 	document.getElementById("locationRequest").style.display = 'block';
 }
@@ -409,7 +415,7 @@ function getNews() {
 			document.getElementById("article2URL").src = "https://www.qrtag.net/api/qr.png?url=" + a2Url;
 			document.getElementById("article3URL").src = "https://www.qrtag.net/api/qr.png?url=" + a3Url;
 			document.getElementById("article4URL").src = "https://www.qrtag.net/api/qr.png?url=" + a4Url;
-			document.getElementById("loader").style.display = 'none';
+			document.getElementById("deets").innerHTML = "loading HQ background..."
 		}
 	}
 }
@@ -417,4 +423,28 @@ function getNews() {
 function noNews() {
 	document.getElementById("articleTitle").innerHTML = "Error!"
 	document.getElementById("articleDesc").innerHTML = "No news avaliable in your area right now."
+}
+
+function smallDisp() {
+	if (screen.availWidth < 1503) {
+		document.getElementById("smallDispWarn").style.display = "";
+	} else {
+		document.getElementById("smallDispWarn").style.display = "none";
+	}
+}
+
+function getBack() {
+	var backs = [
+		"img/1.jpg",
+		"img/2.jpg",
+		"img/3.jpg",
+		"img/4.jpg"
+	]
+	var curBack = backs[Math.floor(Math.random() * backs.length)];
+	document.getElementById("backUrl").innerHTML = 'body {background-image: url("'+ curBack + '")}';
+	if (curBack === "img/1.jpg") {var cred = '<a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=690375">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=690375">Pixabay</a>'}
+	if (curBack === "img/2.jpg") {var cred = '<a href="https://pixabay.com/users/StockSnap-894430/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1298016">StockSnap</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1298016">Pixabay</a>'}
+	if (curBack === "img/3.jpg") {var cred = '<a href="https://pixabay.com/users/3093594-3093594/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1598418">Markus Christ</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1598418">Pixabay</a>'}
+	if (curBack === "img/4.jpg") {var cred = '<a href="https://pixabay.com/users/cegoh-94852/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=255116">Jason Goh</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=255116">Pixabay</a>'}
+	document.getElementById("photoCredit").innerHTML = cred;
 }

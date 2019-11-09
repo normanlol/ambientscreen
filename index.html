@@ -27,7 +27,7 @@
 						<option value="M">Metric</option>
 						<option value="S">Kevlin (Scientific)</option>
 					</select>
-					<button onclick="saveCode()">Save Settings</button><br>
+					<button onclick="getLocation()">Save Settings</button><br>
 				</div>
 				<p id="locationDenied" style="display:none; color:red;">Error! <b>Please allow location services!</b></p>
 				<div id="locLoad" style="display:none;" class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -75,7 +75,8 @@
 				<p id="article4Desc">[Loading]</p>
 				<img class="qrImg" id="article4URL" src="https://qrtag.net/api/qr.png?url=https://example.com">
 			</div>
-			<p class="credit">news information provided by newsapi.org, associated press, and qrtag.net</p>
+			<p class="credit">news information provided by newsapi.org, associated press, and qrtag.net<br>
+			background image by <span id="photoCredit"></span></p>
 		</div>
 		<div id="footer">
 			<span style="cursor:pointer;" onclick="openSettings();" class="material-icons">settings</span>
@@ -124,6 +125,9 @@
 					</div>
 					<p class="credit">no personal information is shared with the developer. geocoding done by <a href="https://geocode.xyz">geocode.xyz</a>.<br>data last updated: <span id="LUString"></span> | <a href="#" onclick="onStartup();">update data</a></p>
 					<div id="settingLoad" style="display:none;" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+					<p class="credit">weather information provided by <span id="wProvider">dark sky</span><br>
+					news information provided by newsapi.org, associated press, and qrtag.net<br>
+					background image by <span id="photoCredit"></span></p>
 				</div>
 			</center></div>
 		</div>
@@ -159,6 +163,14 @@
 				</div>
 			</div>
 		</div>
+		<div class="overlay" id="smallDispWarn" style="display:none;">
+			<div class="overlayContent">
+				<div class="popup">
+					<p>Your screen is too small for AmbientScreen to work properly. Please resize the window and refresh the page or get a bigger screen.</p>
+				</div>
+			</div>
+		</div>
+		<style id="backUrl"></style>
 		<script src="js/app.js"></script>
 	</body>
 </html>
