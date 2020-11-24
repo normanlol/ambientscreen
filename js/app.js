@@ -382,7 +382,7 @@ function refreshPage() {
 function getNews() {
 	document.getElementById("deets").innerHTML = "gettings news stories...";
 	const http = new XMLHttpRequest();
-	const dUrl = "https://newsapi.org/v2/top-headlines?sources=associated-press&apiKey=af3de0ad8360434493a8cad8564cdf7f"
+	const dUrl = "https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?sources=associated-press&apiKey=af3de0ad8360434493a8cad8564cdf7f"
 	http.open("GET", dUrl);
 	http.send();
 	http.onreadystatechange=(e)=>{
